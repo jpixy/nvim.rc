@@ -4,7 +4,7 @@
 One command to install and setup:
 
 ```
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnnyjpixy/nvim.rc/master/install.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnnyjpixy/nvim.rc/main/install.sh)"
 ```
 
 
