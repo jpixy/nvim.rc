@@ -1,5 +1,3 @@
-![VIM](https://dnp4pehkvoo6n.cloudfront.net/43c5af597bd5c1a64eb1829f011c208f/as/Ultimate%20Vimrc.svg)
-
 # The Ultimate neovimrc 
 
 
@@ -39,3 +37,10 @@ Upgrade all plugins:
 ------------------
 Below is the original doc from https://github.com/amix/vimrc.git
 ------------------
+
+
+
+## How to uninstall
+Just do following:
+* Remove `~/.config/nvim_runtime`
+* Remove any lines that reference `.nvim_runtime` in your `~/.vimrc` or `~/.config/nvim_runtime`
