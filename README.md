@@ -11,8 +11,8 @@ sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnnyjpixy/nvim.rc/master
 Please run:
 
 ```
-git clone --depth=1 https://github.com/johnnyjpixy/nvim.rc ~/.config/nvim_runtime
-sh ~/.config/nvim_runtime/install_awesome_nvimrc.sh
+git clone --depth=1 https://github.com/johnnyjpixy/nvim.rc.git ~/.config/nvim_runtime
+sh ~/.config/nvim_runtime/install_awesome_neovimrc.sh
 ```
 
 Then open vim, run
