@@ -4,14 +4,14 @@
 One command to install and setup:
 
 ```
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/johnnyjpixy/nvim.rc/main/install.sh)"
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/jpixy/nvim.rc/main/install.sh)"
 ```
 
 
 Please run:
 
 ```
-git clone --depth=1 https://github.com/johnnyjpixy/nvim.rc.git ~/.config/nvim_runtime
+git clone --depth=1 https://github.com/jpixy/nvim.rc.git ~/.config/nvim_runtime
 sh ~/.config/nvim_runtime/install_awesome_neovimrc.sh
 ```
 
