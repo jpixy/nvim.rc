@@ -112,6 +112,31 @@ let Grep_Skip_Dirs = 'RCS CVS SCCS .svn generated'
 set grepprg=/bin/grep\ -nH
 
 
+""""""""""""""""""""""""""""""
+" => Netrw plugin
+""""""""""""""""""""""""""""""
+""" Hind the head 
+let g:netrw_banner = 0
+""" 1: Show list details; 2: Common list; 3: Tree
+let g:netrw_liststyle = 3
+""" Setup which window to show the opened file. 0: current window, replace the netrw window; 1: H-open; 2: V-open; 3: Tab-open; 4: New window to replace
+let g:netrw_browse_split = 4
+""" Set browser windows width 25%
+let g:netrw_winsize = 25
+""" Always show netrw on the laft when split
+let g:netrw_altv = 1
+""" Open netrw automatic
+""" Issue: if you create new file or preview file, it will overshadow current left explorer
+" augroup ProjectDrawer
+"     autocmd!
+"     autocmd VimEnter * :Vexplore
+" augroup END
+""" Other settings
+" let g:netrw_chgwin = 2
+" let g:netrw_list_hide = '.*\.swp$'
+" let g:netrw_localrmdir = 'rm -rf'
+
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Nerd Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -123,7 +148,6 @@ let NERDTreeHighlightCursorline=1
 map <leader>nn :NERDTreeToggle<cr>
 map <leader>nb :NERDTreeFromBookmark<Space>
 map <leader>nf :NERDTreeFind<cr>
-nmap <F2> :NERDTreeToggle<CR>
 let g:NERDTreeDirArrowExpandable = '▸'
 let g:NERDTreeDirArrowCollapsible = '▾'
 " let the course on the right editor zone by default
@@ -159,10 +183,17 @@ au FileType mako vmap Si S"i${ _(<esc>2f"a) }<esc>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Airline
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" let g:airline_theme='onehalfdark'
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => lightline
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" let g:lightline.colorscheme='wombat'
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
+      \ 'colorscheme': 'PaperColor',
       \ 'active': {
       \   'left': [ ['mode', 'paste'],
       \             ['fugitive', 'readonly', 'filename', 'modified'] ],
@@ -220,7 +251,7 @@ nnoremap <silent> <leader>d :GitGutterToggle<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Tagbar
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <F3> :TagbarToggle<CR>
+map <leader>tt :TagbarToggle<cr>
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -424,6 +455,13 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
+" Mappings for CoC-explorer
+map <leader>ee :CocCommand explorer<cr>
+
+" Costome COC config location
+let g:coc_config_home = '$HOME/.vim_runtime/plugins_conf/coc_config/'
+let g:coc_data_home = '$HOME/.vim_runtime/plugins/coc_data/'
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => echodoc
@@ -447,6 +485,21 @@ highlight link EchoDocPopup Pmenu
 " => Vim-go
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:go_fmt_command = "goimports"
+let g:go_metalinter_enabled = ['vet', 'golint', 'errcheck']
+let g:go_metalinter_autosave = 1
+" highlight settings
+let g:go_highlight_types = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_functions = 1
+let g:go_highlight_function_calls = 1
+let g:go_highlight_operators = 1
+
+
+""""""""""""""""""""""""""""""
+" => sheerun/vim-polyglot plugin
+""""""""""""""""""""""""""""""
+" let g:polyglot_disabled = ['markdown.plugin']
+" let g:polyglot_disabled = ['autoindent']
 
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -463,6 +516,12 @@ let g:go_fmt_command = "goimports"
 " => Vim-autoformat
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap <leader>ff :Autoformat<CR>
+""" C settings
+let g:formatdef_custom_c='"astyle --style=google"'
+let g:formatters_c = ['custom_c']
+let g:formatdef_custom_cpp = '"astyle --style=google"'
+let g:formatters_cpp = ['custom_cpp']
+""" autoformat upon saving file
 " au BufWrite * :Autoformat
 
 
@@ -470,4 +529,21 @@ nmap <leader>ff :Autoformat<CR>
 " => vimspector
 """"""""""""""""""""""""""""""
 " let g:vimspector_enable_mappings = 'HUMAN'
-" let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
+let g:vimspector_enable_mappings = 'VISUAL_STUDIO'
+" let g:vimspector_base_dir=expand( '$HOME/.vim_runtime/plugins_conf/vimspector_gadgets' )
+" let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-cpptools', 'CodeLLDB', 'vscode-go', 'vscode-bash-debug', 'vscode-java-debug', 'debugger-for-chrome' ]
+let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-cpptools', 'CodeLLDB', 'vscode-go', 'vscode-bash-debug', 'vscode-java-debug' ]
+
+" predefined vimspector_json_templates
+" need to install fzf at frist
+function! s:read_template_into_buffer(template)
+	" has to be a function to avoid the extra space fzf#run insers otherwise
+	execute '0r ~/.vim_runtime/plugins_conf/vimspector_json_templates/'.a:template
+endfunction
+command! -bang -nargs=* LoadVimSpectorJsonTemplate call fzf#run({
+			\   'source': 'ls -1 ~/.vim_runtime/plugins_conf/vimspector_json_templates',
+			\   'down': 20,
+			\   'sink': function('<sid>read_template_into_buffer')
+			\ })
+noremap <leader>vst :tabe .vimspector.json<CR>:LoadVimSpectorJsonTemplate<CR>
+
